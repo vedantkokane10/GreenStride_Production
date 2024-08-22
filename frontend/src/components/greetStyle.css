@@ -1,0 +1,112 @@
+body {
+    background-color: #ABDEE9;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: medium;
+    font-weight: bolder;
+    text-shadow: 0.5px 0.5px 0.5px black;
+    margin: 0;
+
+  }
+  body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    height: 130vh;
+    background: linear-gradient(to right top, #264d21, #3c5c24, #556a26, #6f7929, #8c862e);
+    background-size: cover;
+    background-attachment: fixed; /* Optional: Keeps background fixed during scroll */
+}
+  .content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 85vh;
+    width: 100vw;
+  }
+  
+  .image-part {
+    height: 625px; /* Increase height to make the image larger */
+    width: 625px;  /* Increase width to match the height */
+    margin-right: 2rem;
+  }
+  
+  .image-part img {
+    width: 100%;    /* Ensure the image takes up the full width of the container */
+    height: 100%;   /* Ensure the image takes up the full height of the container */
+    object-fit: contain; /* Maintain the image's aspect ratio */
+  }
+  .right-part {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center align the text and button horizontally */
+    text-align: center; /* Center align the paragraph text */
+  }
+  
+  .right-part p {
+    font-size:1.8rem;
+    text-shadow: 0.5px 0.5px 0.5px black;
+    margin-bottom: 0px;
+  }
+  
+  .login-button {
+    width: 120px; /* Increased width for better appearance */
+    height: 2.5rem;
+    border-radius: 50px;
+    border: none; /* Removed border */
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 1.2rem;
+    background-color: orange;
+    cursor: pointer; /* Added cursor pointer */
+  }
+  
+  .login-button2{
+    width: 200px; /* Increased width for better appearance */
+    height: 2.5rem;
+    border-radius: 50px;
+    border: none; /* Removed border */
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 1.2rem;
+    background-color: orange;
+    cursor: pointer; /* Added cursor pointer */
+  }
+  
+  
+
+  
+  .btn {
+    width: 75px;
+    height: 35px;
+    border-radius: 25px;
+    margin-right: 5px;
+    background-color: white;
+  }
+  
+.btn:hover{
+    cursor: pointer;
+}
+
+  .button-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start; /* Aligns items to the left */
+    align-items: center;
+    margin-top: 20px;
+    width: 100%; /* Ensure it takes the full width of the parent */
+    padding: 0; /* Reset padding */
+    margin: 0; /* Reset margin */
+  }
+  
+  .container {
+    display: flex;
+    margin-top: 20px;
+    justify-content: flex-start; /* Align the entire section to the left */
+    width: 100%; /* Ensure the container takes the full width */
+  }
+  
+  

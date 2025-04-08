@@ -1,7 +1,7 @@
 import express from 'express';
-import {addActivity,getActivites,getActivitesByCategory,getSuggestions} from '../controllers/ActivityController.js';
+import {addActivity, getActivitesByDate,getActivites,getActivitesByCategory,getSuggestions} from '../controllers/ActivityControllerSQL.js';
 import {validateToken} from '../middleware/validateTokenHandler.js'
-import {getLeaderboard} from '../controllers/LeaderboardController.js';
+import {getLeaderboard} from '../controllers/LeaderboardControllerSQL.js';
 const router = express.Router();
 
 router.get('/',() =>{
@@ -13,7 +13,7 @@ router.get('/getLeaderboard',validateToken,getLeaderboard);
 
 router.post('/addActivity',validateToken,addActivity);
 
-router.get('/getActivities',validateToken,getActivites);
+router.get('/getActivities',validateToken,getActivitesByDate);
 
 router.get('/getActivitiesByCategory',validateToken,getActivitesByCategory);
 router.get('/getSuggestions',validateToken,getSuggestions);

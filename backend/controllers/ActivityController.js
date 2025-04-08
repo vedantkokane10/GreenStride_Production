@@ -51,6 +51,14 @@ const getActivites = asyncHandler(async (req,res) => {
 });
 
 
+const getActivitesByDate = asyncHandler(async (req,res) => {
+    console.log(req.user.email);
+    const activities = await Activity.find({email:req.user.email}).sort({date:-1});
+    //console.log(activities)
+    return res.json(activities);
+});
+
+
 const getActivitesByCategory = asyncHandler(async (req,res) => {
     const activities = await Activity.find({email:req.user.email}).sort({date:-1});
     const category = {

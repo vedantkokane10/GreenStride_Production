@@ -29,7 +29,7 @@ const ActivitiesDateWise = () => {
 
   const activitiesByDate = {}; // mapping of activities to dates
   activities.forEach((activity) => {
-    const date = activity.date.split('T')[0];
+    const date = activity.dateadded.split('T')[0];
 
     // if date is not present in activitiesByDate then add it with empty object
     if (!activitiesByDate[date]) {

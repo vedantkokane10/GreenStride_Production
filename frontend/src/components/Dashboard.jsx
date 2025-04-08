@@ -34,12 +34,12 @@ const Dashboard = () => {
  
 
   const totalEmissionDateWise = activities.reduce((sum,activity) => {
-    const date = activity.date.split('T')[0];
+    const date = activity.dateadded.split('T')[0];
     if(!sum[date]){
       sum[date] = 0;
     }
 
-    sum[date] += activity.carbonEmission;
+    sum[date] += activity.carbonemission;
     return sum;
   },{});
 
@@ -47,13 +47,13 @@ const Dashboard = () => {
 
 
   const totalEmissionTypeWise = activities.reduce((sum,activity) => {
-    const date = activity.date.split('T')[0];
+    const date = activity.dateadded.split('T')[0];
     const type = activity.type;
     if(!sum[type]){
       sum[type] = 0;
     }
 
-    sum[type] += activity.carbonEmission;
+    sum[type] += activity.carbonemission;
     return sum;
   },{});
 
@@ -61,14 +61,14 @@ const Dashboard = () => {
     <div className='charts'>
       {
         activities.length === 0 ?
-        <h3>No Activities found</h3>
+        <h3 style={{color:"black"}}>No Activities found</h3>
         :
         <>
         <h3></h3>
         <LineChartComponent totalEmissionDateWise={totalEmissionDateWise}  />
         <br></br><br></br><br></br><br></br>
         <br></br><br></br>
-        <h2>Total CO2 Emissions by different types of Activites</h2>
+        <h2 style={{color:"black"}}>Total CO2 Emissions by different types of Activites</h2>
         <PieChart totalEmissionTypeWise={totalEmissionTypeWise}  />
         </>
       }

@@ -1,82 +1,82 @@
-import bcrypt from "bcrypt";
+import argon2 from "argon2";
 import jwt from "jsonwebtoken";
 import asyncHandler from 'express-async-handler';
 import user from "../models/userSchema.js";
 
-const ACESS_TOKEN_SECRET = 'Footprint123'
+const ACCESS_TOKEN_SECRET = 'Footprint123';
 
-//@description login user
-//@route POST /login
-//@access public
-const login = asyncHandler(async (req, res) =>{
-    const {email, password} = req.body;
+// @description login user
+// @route POST /login
+// @access public
+const login = asyncHandler(async (req, res) => {
+    const { email, password } = req.body;
 
-    if(!email || !password){
-        res.status(403);
-        res.json({"Message": "Please enter email and password"});
+    if (!email || !password) {
+        res.status(403).json({ "Message": "Please enter email and password" });
         return;
     }
 
-    const currentUser = await user.findOne({email: email});
-    if(!currentUser){
-        res.status(403);
-        res.json({"Message": "Invalid email or password"});
+    const currentUser = await user.findOne({ email });
+    if (!currentUser) {
+        res.status(403).json({ "Message": "Invalid email or password" });
         return;
     }
 
-    const hashedPassword = await bcrypt.hash(password,10);
-    if(await bcrypt.compare(password,hashedPassword)){
-        // user matched
+    const isPasswordValid = await argon2.verify(currentUser.password, password);
+    if (isPasswordValid) {
         const accessToken = jwt.sign({
-            user:{
+            user: {
                 id: currentUser._id,
                 email: currentUser.email
-            },
-        }, ACESS_TOKEN_SECRET, {expiresIn: '1h'})
+            }
+        }, ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
 
-        res.json({"Message": "User logged in successfully", accessToken});
+        res.json({ "Message": "User logged in successfully", accessToken });
+    } else {
+        res.status(403).json({ "Message": "Invalid email or password" });
     }
-    else{
-        // user not matched
-        res.status(403);
-        res.json({"Message": "Invalid email or password"});
+});
+
+// @description Register user
+// @route POST /register
+// @access public
+const register = asyncHandler(async (req, res) => {
+    const { userName, email, password } = req.body;
+
+    if (!userName || !email || !password) {
+        res.status(403).json({ "Message": "Please enter all fields" });
         return;
     }
-})
 
-
-//@description Register user
-//@route POST /Register
-//@access public
-const register = asyncHandler(async (req, res) =>{
-    const {userName, email, password} = req.body;
-
-    if(!userName || !email || !password){
-        res.status(403);
-        res.json({"Message": "Please enter all fields"});
+    const userExists = await user.findOne({ email });
+    if (userExists) {
+        res.status(403).json({ "Message": "Email already exists" });
         return;
     }
-    const userExists = await user.findOne({email : email});
-    if(userExists){
-        res.status(403);
-        res.json({"Message": "Email already exists"});
-        return;
-    }
-    const hashedPassword = await bcrypt.hash(password,10);
-    const newUser = await user.create({userName : userName,email: email ,password : hashedPassword});
+
+    const hashedPassword = await argon2.hash(password);
+    const newUser = await user.create({
+        userName,
+        email,
+        password: hashedPassword
+    });
+
     const accessToken = jwt.sign({
-        user:{
+        user: {
             id: newUser._id,
             email: newUser.email
         }
-    }, ACESS_TOKEN_SECRET, {expiresIn: '1h'});
-    res.json({"Message": "registered user successfully",
-             accessToken});
+    }, ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
+
+    res.json({ "Message": "Registered user successfully", accessToken });
 });
 
-const getUserData = asyncHandler(async (req, res) =>{
-    const user = await user.findOne(req.params.email).select('-password');
-    res.json(user)
-})
+// @description Get user data
+// @route GET /user/:email
+// @access private
+const getUserData = asyncHandler(async (req, res) => {
+    const userData = await user.findOne({ email: req.params.email }).select('-password');
+    res.json(userData);
+});
 
-export {login, register};
+export { login, register };

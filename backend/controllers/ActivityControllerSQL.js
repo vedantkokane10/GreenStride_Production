@@ -1,4 +1,3 @@
-import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import asyncHandler from 'express-async-handler';
 const ACESS_TOKEN_SECRET = 'Footprint123'
